@@ -34,12 +34,12 @@ jobs:
           done
         shell: bash
 
-      # Debug step to list the contents of oneline-configs
-      - name: List oneline-configs directory
-        run: ls -al oneline-configs
-
-      - name: Upload One-Liner Commands as Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: git-one-liners
-          path: oneline-configs/
+      - name: Commit and Push One-Liner Configs
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add oneline-configs/*.txt
+          git commit -m "Add updated one-liner git commands"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,35 @@
+name: Bash to One-Liner Git Config
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  convert_bash_scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Make bash-to-oneline script executable
+        run: chmod +x ./build/bash-to-oneline.sh
+
+      - name: Convert Bash Scripts to One-Liners and Create Separate Files
+        run: |
+          mkdir -p oneline-configs
+          for script in $(find ./bash-scripts -name "*.sh"); do
+            command_name=$(basename "$script" .sh)
+            ./build/bash-to-oneline.sh "$script" > "oneline-configs/${command_name}.txt"
+          done
+        shell: bash
+
+      - name: Upload One-Liner Commands as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: git-one-liners
+          path: oneline-configs/

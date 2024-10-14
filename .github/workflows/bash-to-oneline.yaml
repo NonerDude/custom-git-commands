@@ -16,20 +16,25 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3 # Make sure to use the latest v3 version
 
-      - name: IC
-        run: ls -a
-
-      - name: Make bash-to-oneline script executable
-        run: chmod +x build/bash-to-oneline.sh
 
       - name: Convert Bash Scripts to One-Liners and Create Separate Files
         run: |
           mkdir -p oneline-configs
-          for script in $(find ./bash-scripts -name "*.sh"); do
-            command_name=$(basename "$script" .sh)
-            build/bash-to-oneline.sh "$script" > "oneline-configs/${command_name}.txt"
+          
+          # Inline bash-to-oneline logic
+          convert_to_oneline() {
+            content=$(cat "$1")
+            escaped_content=$(echo "$content" | sed 's/\\/\\\\/g' | sed 's/"/\\"/g' | sed 's/\$/\\\$/g')
+            command_name=$(basename "$1" .sh)
+            echo "git config --global alias.${command_name} '!sh -c \"$escaped_content\"'"
+          }
+
+          # Loop through each bash script and generate one-liner configs
+          for script in $(find . -name "*.sh"); do
+            convert_to_oneline "$script" > "oneline-configs/$(basename "$script" .sh).txt"
           done
         shell: bash
+
 
       - name: Upload One-Liner Commands as Artifact
         uses: actions/upload-artifact@v3 # Updated to v3

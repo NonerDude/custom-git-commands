@@ -21,7 +21,7 @@ Here’s a quick rundown of what each command does:
 
 Command alias: git chf <branch-substring>
 
-You ever forget the exact branch name? Happens to all of us. With fast-checkout, you can just type a part of the branch name and Git will do the hard work of finding it. If there’s more than one match, it’ll show you the options. It’s like Git, but faster.
+You ever forget the exact branch name? Happens to all of us. With fast-checkout, you can just type a part of the branch name and Git will do the hard work of finding it. If there’s more than one match, it’ll show you the options. It’s like Git checkout, but faster.
 
 ## 🔄 last-branches
 

@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write  # This grants the GITHUB_TOKEN write access to the repository
+
 jobs:
   convert_bash_scripts:
     runs-on: ubuntu-latest

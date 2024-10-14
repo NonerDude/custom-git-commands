@@ -13,7 +13,7 @@ You can either:
 
 Either way, these commands are designed to simplify your Git workflow without adding any extra complexity. And yes, they are 100% safe—no messing with your history unless you ask for it. 😏
 
-Commands Breakdown
+# Commands Breakdown
 
 Here’s a quick rundown of what each command does:
 

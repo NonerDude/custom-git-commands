@@ -39,7 +39,7 @@ Command alias: git cu
 
 Need a quick glance at your current branch? current-branch shows it with a splash of color. It’s nothing fancy, but it saves a few keystrokes and makes you look good in the terminal.
 
-Setting Up
+# Setting Up
 
 To use these commands, you can either:
 

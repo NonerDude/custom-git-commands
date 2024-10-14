@@ -16,6 +16,9 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3 # Make sure to use the latest v3 version
 
+      - name: IC
+        run: ls -a
+
       - name: Make bash-to-oneline script executable
         run: chmod +x build/bash-to-oneline.sh
 

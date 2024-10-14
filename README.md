@@ -1,25 +1,58 @@
-# custom-git-commands
-A collection of useful git commands
+🚀 Custom Git Commands for a Smoother Workflow
 
+Welcome to Custom Git Commands! If you’re tired of typing out long Git commands every time you work, or just want to speed things up with a few shortcuts, you’re in the right place. Here’s a collection of my favorite Git commands that I’ve packaged up to make life easier.
 
-Smart checkout by substring
-git config --global alias.chf '!sh -c "BRANCH_PATTERN=$1; if [ -z \"\$BRANCH_PATTERN\" ]; then echo \"\${yellow}Please provide a branch sub-string\${no_color}\\n\"; exit; fi; git checkout \$BRANCH_PATTERN  2>/dev/null; if [ \$? -eq 0 ]; then exit; fi; yellow=\"\\033[0;33m\"; cyan=\"\\033[0;36m\"; no_color=\"\\033[0m\"; echo \"Could not checkout to given branch name,\n\${cyan}Searching a branch name with given string\${no_color}\n\"; MATCHING_BRANCHES=\$( git branch --format=\"%(refname:short)\" | grep -i \$BRANCH_PATTERN | xargs echo ); if [ -z \"\$MATCHING_BRANCHES\" ]; then echo \"Could not find a local branch name with given string,\n\${cyan}Searching a branch name with given string in \${yellow}remote branches\${no_color}\n\"; MATCHING_BRANCHES=\$( git branch --remote --format=\"%(refname:short)\" | sed \"s/origin\///g\" | grep -i \$BRANCH_PATTERN | xargs echo ); fi; if [ -z \"\$MATCHING_BRANCHES\" ]; then echo \"\${yellow}No matching branch found\${no_color}\\n\"; elif [ \"\$MATCHING_BRANCHES\" != \"\$(echo \$MATCHING_BRANCHES | sed \"s/ //g\")\" ]; then echo \"\${yellow}Multiple matching branches found\${no_color}:\"; echo \"\$(echo \$MATCHING_BRANCHES | sed \"s/ /\\n/g\")\\n\"; else git checkout \$MATCHING_BRANCHES; fi;"'
+These commands do things like fast-checkouts, checking the last branches you’ve been working on, and showing your current branch in style.
 
-Last Checked-out Branches
-git config --global alias.lbr '!f() { 
-  remove_duplicates="cat";
-  reverse="";
-  count=5;  # Default to 5
-  while getopts "run:" opt; do
-    case $opt in
-      r) reverse="reverse";;
-      u) remove_duplicates="perl -ne '\''print unless \$seen{\$_}++'\''";;
-      n) count=$OPTARG;;
-    esac
-  done
-  shift $((OPTIND -1))
-  git reflog | grep -E "checkout: moving from" | sed -E "s/.*checkout: moving from [^ ]+ to ([^ ]+).*/\\1/" | eval $remove_duplicates | eval "perl -e '\''@lines=<>; print @lines[0..($count-1)]'\''" | eval "perl -e '\''print ${reverse}<>'\''";
-}; f'
+How to Use This Repo
 
-Current Branch
-git config --global --add alias.cu '!sh -c "cyan=\"\\033[0;36m\"; no_color=\"\\033[0m\"; echo \"\${cyan}$(git rev-parse --abbrev-ref HEAD)\${no_color}\";"'
+You can either:
+
+	1.	Add these Git aliases quickly by running the one-liner commands generated for each script (check out the oneline-configs folder).
+	2.	Explore the scripts and use them manually if you like tweaking things or want to know exactly what’s happening.
+
+Either way, these commands are designed to simplify your Git workflow without adding any extra complexity. And yes, they are 100% safe—no messing with your history unless you ask for it. 😏
+
+Commands Breakdown
+
+Here’s a quick rundown of what each command does:
+
+⚡ fast-checkout
+
+Command alias: git chf <branch-substring>
+
+You ever forget the exact branch name? Happens to all of us. With fast-checkout, you can just type a part of the branch name and Git will do the hard work of finding it. If there’s more than one match, it’ll show you the options. It’s like Git, but faster.
+
+🔄 last-branches
+
+Command alias: git lbr
+
+This command shows you the last few branches you’ve checked out recently, so you don’t have to dig through git log to remember where you’ve been. It even has some cool options:
+
+	•	-r: Show them in reverse order.
+	•	-u: Remove duplicates.
+	•	-n <number>: Control how many branches to show (default is 5).
+
+📍 current-branch
+
+Command alias: git cu
+
+Need a quick glance at your current branch? current-branch shows it with a splash of color. It’s nothing fancy, but it saves a few keystrokes and makes you look good in the terminal.
+
+Setting Up
+
+To use these commands, you can either:
+
+1.	Run the one-liner:
+Just run the one-liner git config commands stored in the oneline-configs/ folder.
+
+2. Clone this repo:
+
+Clone the repository locally and manually add the aliases to your Git config. Here’s how you can do it:
+
+	1.	Clone the repo:
+    git clone https://github.com/NonerDude/custom-git-commands.git
+    cd custom-git-commands
+  2.	Open any .sh file from the bash-scripts/ folder (e.g., fast-checkout.sh), and manually add it to your Git config. For example, to set up the fast-checkout command:
+    git config --global alias.chf '!bash path/to/fast-checkout.sh'
+	3.	Repeat for other scripts to add more aliases. Now, you can use the commands in your terminal like any normal Git command.

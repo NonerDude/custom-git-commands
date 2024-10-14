@@ -14,8 +14,7 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3 # Make sure to use the latest v3 version
-
+        uses: actions/checkout@v3
 
       - name: Convert Bash Scripts to One-Liners and Create Separate Files
         run: |
@@ -35,9 +34,12 @@ jobs:
           done
         shell: bash
 
+      # Debug step to list the contents of oneline-configs
+      - name: List oneline-configs directory
+        run: ls -al oneline-configs
 
       - name: Upload One-Liner Commands as Artifact
-        uses: actions/upload-artifact@v3 # Updated to v3
+        uses: actions/upload-artifact@v3
         with:
           name: git-one-liners
           path: oneline-configs/

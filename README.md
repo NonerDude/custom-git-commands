@@ -11,7 +11,7 @@ You can either:
 	1.	Add these Git aliases quickly by running the one-liner commands generated for each script (check out the oneline-configs folder).
 	2.	Explore the scripts and use them manually if you like tweaking things or want to know exactly what’s happening.
 
-Either way, these commands are designed to simplify your Git workflow without adding any extra complexity. And yes, they are 100% safe—no messing with your history unless you ask for it. 😏
+Either way, these commands are designed to simplify your Git workflow without adding any extra complexity.
 
 # Commands Breakdown
 
